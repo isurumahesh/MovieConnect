@@ -13,12 +13,9 @@ builder.Services.AddAppDI(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Swagger is enabled for demo purpose 
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseMiddleware<CustomErrorMiddleWare>();
 
