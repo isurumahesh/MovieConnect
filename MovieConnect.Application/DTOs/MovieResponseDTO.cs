@@ -2,9 +2,9 @@
 
 namespace MovieConnect.Application.DTOs
 {
-    public class MovieResponseDTO
+    public record MovieResponseDTO
     {
-        public MovieDetail? MovieDetail { get; set; }
-        public List<MovieVideo> MovieVideos { get; set; } = new List<MovieVideo>();
+        public MovieDetail? MovieDetail { get; init; }
+        public List<MovieVideo> MovieVideos { get; init; } = new ();
     }
 }

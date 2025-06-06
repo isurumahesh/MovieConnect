@@ -44,7 +44,7 @@ namespace MovieConnect.UnitTests.Application
             var selector = new MovieDetailServiceSelector(services, providerConfigMock.Object);
 
             // Act & Assert
-            var ex = Assert.Throws<ArgumentException>(() => selector.GetService());
+            var ex = Assert.Throws<InvalidOperationException>(() => selector.GetService());
             Assert.Equal("Movie details provider is not defined", ex.Message);
         }
 
@@ -63,7 +63,7 @@ namespace MovieConnect.UnitTests.Application
             var selector = new MovieDetailServiceSelector(services, providerConfigMock.Object);
 
             // Act & Assert
-            var ex = Assert.Throws<ArgumentException>(() => selector.GetService());
+            var ex = Assert.Throws<InvalidOperationException>(() => selector.GetService());
             Assert.Equal("Service 'NonExistentProvider' not found.", ex.Message);
         }
     }

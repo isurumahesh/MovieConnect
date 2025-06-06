@@ -18,13 +18,13 @@ namespace MovieConnect.Application.Services
         {
             if (string.IsNullOrEmpty(selectedProvider))
             {
-                throw new ArgumentException($"Movie video provider is not defined");
+                throw new InvalidOperationException($"Movie video provider is not defined");
             }
 
             if (services.TryGetValue(selectedProvider, out var service))
                 return service;
 
-            throw new ArgumentException($"Service '{selectedProvider}' not found.");
+            throw new InvalidOperationException($"Service '{selectedProvider}' not found.");
         }
     }
 }

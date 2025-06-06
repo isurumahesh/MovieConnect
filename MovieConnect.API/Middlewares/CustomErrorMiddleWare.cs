@@ -42,7 +42,7 @@ namespace MovieConnect.API.MiddleWare
             var errorResponse = new
             {
                 StatusCode = (int)statusCode,
-                Message = _env.IsDevelopment() ? err.Message : "An unexpected error occurred. Please try again later.",
+                Message = err.Message,
                 Details = _env.IsDevelopment() ? err.StackTrace : null
             };
 
