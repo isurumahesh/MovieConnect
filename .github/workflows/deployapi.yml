@@ -6,9 +6,6 @@ name: Deploy MovieConnect API
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
 env:
   AZURE_WEBAPP_NAME: "movieconnectapi"
 
@@ -55,6 +52,6 @@ jobs:
       with:
         images: ${{ secrets.ACR_LOGIN_SERVER }}/movieconnectapi:${{ github.run_id }}
         app-name: ${{env.AZURE_WEBAPP_NAME}}
-        publish-profile: ${{secrets.RM_PUBLISH_SECRET}}     
+        publish-profile: ${{secrets.API_PUBLISH_SECRET}}     
 
 
