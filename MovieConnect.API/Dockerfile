@@ -14,7 +14,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["MovieConnect.API/MovieConnect.API.csproj", "MovieConnect.API/"]
 COPY ["MovieConnect.Application/MovieConnect.Application.csproj", "MovieConnect.Application/"]
-COPY ["MovieConnect.Domain/MovieConnect.Domain.csproj", "MovieConnect.Domain/"]
+COPY ["MovieConnect.Core/MovieConnect.Core.csproj", "MovieConnect.Core/"]
 COPY ["MovieConnect.Infrastructure/MovieConnect.Infrastructure.csproj", "MovieConnect.Infrastructure/"]
 RUN dotnet restore "./MovieConnect.API/MovieConnect.API.csproj"
 COPY . .
