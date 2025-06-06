@@ -2,10 +2,10 @@
 {
     public class MovieVideoProvider
     {
-        public string Name { get; set; }
-        public string ApiKey { get; set; }
-        public string ApiUrl { get; set; }
+        public string Name { get; set; } = null!;
+        public string ApiKey { get; set; }= null!;
+        public string ApiUrl { get; set; }= null!;
         public bool IsActive { get; set; }
-        public HttpClientPoliciesOptions HttpClientPolicies { get; set; }
+        public HttpClientPoliciesOptions HttpClientPolicies { get; set; } = null!;
     }
 }

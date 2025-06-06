@@ -2,7 +2,7 @@
 {
     public class MovieProviderOptions
     {
-        public List<MovieDetailProvider> MovieDetailProviders { get; set; }
-        public List<MovieVideoProvider> MovieVideoProviders { get; set; }
+        public List<MovieDetailProvider> MovieDetailProviders { get; set; }=new List<MovieDetailProvider>();
+        public List<MovieVideoProvider> MovieVideoProviders { get; set; } = new List<MovieVideoProvider>();
     }
 }
