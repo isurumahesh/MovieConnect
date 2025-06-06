@@ -13,6 +13,9 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["MovieConnect.API/MovieConnect.API.csproj", "MovieConnect.API/"]
+COPY ["MovieConnect.Application/MovieConnect.Application.csproj", "MovieConnect.Application/"]
+COPY ["MovieConnect.Domain/MovieConnect.Domain.csproj", "MovieConnect.Domain/"]
+COPY ["MovieConnect.Infrastructure/MovieConnect.Infrastructure.csproj", "MovieConnect.Infrastructure/"]
 RUN dotnet restore "./MovieConnect.API/MovieConnect.API.csproj"
 COPY . .
 WORKDIR "/src/MovieConnect.API"

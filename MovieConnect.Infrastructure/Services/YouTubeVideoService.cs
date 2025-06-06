@@ -14,8 +14,18 @@ namespace MovieConnect.Infrastructure.Services
 
         public async Task<List<MovieVideo>> GetMovieVideosAsync(string movieName)
         {
-            var apiKey = options.Value.MovieVideoProviders.First(a => a.Name == ProviderName).ApiKey;
-            var searchResponse = await httpClient.GetFromJsonAsync<YouTubeSearchResponse>($"search?q={movieName}&part=id,snippet&type=video&key={apiKey}");
+            if (string.IsNullOrWhiteSpace(movieName))
+                throw new ArgumentException("Movie name must be provided.", nameof(movieName));
+
+            var provider = options.Value.MovieVideoProviders.FirstOrDefault(a => a.Name == ProviderName);
+
+            if (provider is null || string.IsNullOrEmpty(provider.ApiKey))
+            {
+                throw new InvalidOperationException("YouTube provider configuration is missing.");
+            }
+
+            var requestUri = $"search?q={Uri.EscapeDataString(movieName)}&part=id,snippet&type=video&key={provider.ApiKey}";
+            var searchResponse = await httpClient.GetFromJsonAsync<YouTubeSearchResponse>(requestUri);
 
             if (searchResponse is null)
             {

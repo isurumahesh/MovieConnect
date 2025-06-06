@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Options;
+using MovieConnect.Application.Exceptions;
 using MovieConnect.Core.Interfaces;
 using MovieConnect.Core.Models;
 using MovieConnect.Infrastructure.ApiResponse;
@@ -14,12 +15,22 @@ namespace MovieConnect.Infrastructure.Services
 
         public async Task<MovieDetail> GetMovieDetailsAsync(string movieName)
         {
-            var apiKey = options.Value.MovieDetailProviders.First(a => a.Name == ProviderName).ApiKey;
-            var searchResponse = await httpClient.GetFromJsonAsync<OmdbMovieResponse>($"?t={movieName}&apikey={apiKey}");
+            if (string.IsNullOrWhiteSpace(movieName))
+                throw new ArgumentException("Movie name must be provided.", nameof(movieName));
+         
+            var provider = options.Value.MovieDetailProviders.FirstOrDefault(a => a.Name == ProviderName);
 
-            if (searchResponse == null)
+            if (provider is null || string.IsNullOrEmpty(provider.ApiKey))
             {
-                throw new Exception("Movie not found");
+                throw new InvalidOperationException("Omdb provider configuration is missing.");
+            }
+
+            var requestUri = $"?t={Uri.EscapeDataString(movieName)}&apikey={provider.ApiKey}";
+            var searchResponse = await httpClient.GetFromJsonAsync<OmdbMovieResponse>(requestUri);
+
+            if (searchResponse == null || searchResponse.Response=="False")
+            {
+                throw new MovieNotFoundException($"Movie '{movieName}' not found.");
             }
 
             return mapper.Map<MovieDetail>(searchResponse);

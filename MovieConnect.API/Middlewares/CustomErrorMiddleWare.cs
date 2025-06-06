@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MovieConnect.Application.Exceptions;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace MovieConnect.API.MiddleWare
@@ -33,6 +34,7 @@ namespace MovieConnect.API.MiddleWare
             var statusCode = err switch
             {
                 ArgumentException => HttpStatusCode.BadRequest,
+                MovieNotFoundException => HttpStatusCode.NotFound,
                 UnauthorizedAccessException => HttpStatusCode.Unauthorized,
                 _ => HttpStatusCode.InternalServerError
             };
