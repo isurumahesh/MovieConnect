@@ -12,6 +12,12 @@ namespace MovieConnect.IntegrationTests
         public MoviesControllerIntegrationTests(WebApplicationFactory<Program> factory)
         {
             _client = factory.CreateClient();
+            var apiKey = Environment.GetEnvironmentVariable("MOVIE_CONNECT_API_KEY");
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                throw new Exception("MOVIE_CONNECT_API_KEY environment variable is not set.");
+            }
+            _client.DefaultRequestHeaders.Add("X-API-KEY", apiKey);
         }
 
         [Fact]
