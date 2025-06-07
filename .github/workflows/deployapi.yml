@@ -63,6 +63,9 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+    - name: Clear Azure CLI token cache
+      run: rm -f ~/.azure/msal_token_cache.bin
+
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
