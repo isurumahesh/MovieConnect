@@ -1,6 +1,9 @@
 
 # MovieConnect API
 
+## Overview  
+The **MovieConnect API** allows users to search for movies, retrieve detailed information, and fetch video URLs for streaming. It integrates with external services like OMDb and YouTube APIs for data enrichment, offering seamless movie-related functionalities to developers.  
+
 ## Features  
 - **Search Movie Details**: Search your favorite movies across multiple providers and get detailed movie information.   
 - **Strategy Design Pattern**: Easily switch between multiple movie and video providers with a clean, extendable design.  
@@ -12,6 +15,7 @@
 - **Unit and Integration Tests**: Comprehensive tests ensuring application stability and correctness.  
 - **Dockerized Deployment**: Ready to deploy with Docker containers.  
 - **CI/CD Pipeline**: GitHub Actions workflow for automated builds, tests, and Azure deployments.
+- **API Key Authentication**: Secure endpoints using a custom API key middleware. 
 
 ## Technologies Used  
 - **IDE**: Visual Studio 2022 / VS Code  
@@ -32,15 +36,42 @@
    git clone https://github.com/yourusername/MovieConnectAPI.git
    cd MovieConnect.API
    ```
+### 2. Set Environment Variables
 
-2. **Run the Application**  
-   Run the API project from Visual Studio or use the .NET CLI:  
+To use the API securely, you need to set up the required environment variables.
+
+#### On Windows:
+1. Open a Command Prompt or PowerShell window.
+2. Run the following commands:
    ```bash
-   dotnet run --project MovieConnect.API
+   setx OMDB_API_KEY 6b03d134
+   setx YOUTUBE_API_KEY AIzaSyCanmwIzMludMaUuM-Tt_7fiaEugQwTaJM
+   setx MOVIE_CONNECT_API_KEY YourSecureApiKey12345
+   ```
+3. Restart your Command Prompt or IDE to apply the changes.
+
+#### On Linux/Mac:
+1. Open a terminal window.
+2. Add the following lines to your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`, or `~/.bash_profile`):
+   ```bash
+   export OMDB_API_KEY=6b03d134
+   export YOUTUBE_API_KEY=AIzaSyCanmwIzMludMaUuM-Tt_7fiaEugQwTaJM
+   export MOVIE_CONNECT_API_KEY=YourSecureApiKey12345
+   ```
+3. Reload the shell configuration file:
+   ```bash
+   source ~/.bashrc  # or ~/.zshrc
    ```
 
-3. **Access the API**  
-   Navigate to Swagger UI at: `https://localhost:<port>/swagger/index.html`
+### 3. Run the Application
+Run the API project from Visual Studio or use the .NET CLI:
+```bash
+dotnet run --project MovieConnect.API
+```
+
+### 4. Access the API
+Navigate to Swagger UI at:  
+`https://localhost:<port>/swagger/index.html`
 
 ## Deployment
 

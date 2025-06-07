@@ -27,9 +27,8 @@ namespace MovieConnect.Infrastructure.Services
             var envApiKey = Environment.GetEnvironmentVariable(provider.ApiKey);
             if (string.IsNullOrEmpty(envApiKey))
                 throw new Exception($"Missing API key environment variable for {provider.ApiKey}");
-            provider.ApiKey = envApiKey;
-
-            var requestUri = $"search?q={Uri.EscapeDataString(movieName)}&part=id,snippet&type=video&key={provider.ApiKey}";
+    
+            var requestUri = $"search?q={Uri.EscapeDataString(movieName)}&part=id,snippet&type=video&key={envApiKey}";
             var searchResponse = await httpClient.GetFromJsonAsync<YouTubeSearchResponse>(requestUri);
 
             if (searchResponse is null)

@@ -28,9 +28,8 @@ namespace MovieConnect.Infrastructure.Services
             var envApiKey = Environment.GetEnvironmentVariable(provider.ApiKey);
             if (string.IsNullOrEmpty(envApiKey))
                 throw new Exception($"Missing API key environment variable for {provider.ApiKey}");
-            provider.ApiKey = envApiKey;
-
-            var requestUri = $"?t={Uri.EscapeDataString(movieName)}&apikey={provider.ApiKey}";
+           
+            var requestUri = $"?t={Uri.EscapeDataString(movieName)}&apikey={envApiKey}";
             var searchResponse = await httpClient.GetFromJsonAsync<OmdbMovieResponse>(requestUri);
 
             if (searchResponse == null || searchResponse.Response == "False")
