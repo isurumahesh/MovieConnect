@@ -18,7 +18,7 @@ The **MovieConnect API** allows users to search for movies, retrieve detailed in
 - **API Key Authentication**: Secure endpoints using a custom API key middleware. 
 
 ## Technologies Used  
-- **IDE**: Visual Studio 2022 / VS Code  
+- **IDE**: Visual Studio 2022  
 - **Framework**: .NET 8  
 - **Architecture**: Clean Architecture, CQRS  
 - **HTTP Client**: Typed HttpClient with Polly for resiliency  
