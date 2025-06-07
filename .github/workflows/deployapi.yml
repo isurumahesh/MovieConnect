@@ -31,6 +31,9 @@ jobs:
       run: dotnet test ./MovieConnect.UnitTests/MovieConnect.UnitTests.csproj --configuration Release
 
     - name: Run Integration Tests
+      env:
+        OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
+        YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       run: dotnet test ./MovieConnect.IntegrationTests/MovieConnect.IntegrationTests.csproj --configuration Release
 
     - name: "Azure ACR login"
