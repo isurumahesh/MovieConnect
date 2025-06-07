@@ -34,6 +34,7 @@ jobs:
       env:
         OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
         YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        MOVIE_CONNECT_API_KEY: ${{secrets.MOVIE_CONNECT_API_KEY}}
       run: dotnet test ./MovieConnect.IntegrationTests/MovieConnect.IntegrationTests.csproj --configuration Release
 
     - name: "Azure ACR login"
@@ -88,5 +89,6 @@ jobs:
         RESOURCE_GROUP: ${{ env.RESOURCE_GROUP }}
         OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
         YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        MOVIE_CONNECT_API_KEY: ${{secrets.MOVIE_CONNECT_API_KEY}}
       run: |
-        az webapp config appsettings set --name "$AZURE_WEBAPP_NAME" --resource-group "$RESOURCE_GROUP" --settings OMDB_API_KEY="$OMDB_API_KEY" YOUTUBE_API_KEY="$YOUTUBE_API_KEY"
+        az webapp config appsettings set --name "$AZURE_WEBAPP_NAME" --resource-group "$RESOURCE_GROUP" --settings OMDB_API_KEY="$OMDB_API_KEY" YOUTUBE_API_KEY="$YOUTUBE_API_KEY" MOVIE_CONNECT_API_KEY="$MOVIE_CONNECT_API_KEY"

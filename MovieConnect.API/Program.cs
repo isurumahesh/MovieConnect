@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
-{   
+{
     c.AddSecurityDefinition("ApiKey", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Description = "API Key needed to access the endpoints. Use 'X-Api-Key' header to pass the key.",
@@ -45,7 +45,7 @@ builder.Services.AddAppDI(builder.Configuration);
 
 var app = builder.Build();
 app.UseMiddleware<CustomErrorMiddleWare>();
-//app.UseMiddleware<ApiKeyMiddleware>();
+app.UseMiddleware<ApiKeyMiddleware>();
 
 // Swagger is enabled for demo purpose on production
 app.UseSwagger();

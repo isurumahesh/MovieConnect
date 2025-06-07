@@ -16,9 +16,9 @@
         public string Country { get; set; } = string.Empty;
         public string Awards { get; set; } = string.Empty;
         public string Poster { get; set; } = string.Empty;
-        public List<Rating> Ratings { get; set; } = new ();
+        public List<Rating> Ratings { get; set; } = new();
         public string ImdbRating { get; set; } = string.Empty;
         public string ImdbVotes { get; set; } = string.Empty;
-        public string ImdbID { get; set; } = string.Empty;      
+        public string ImdbID { get; set; } = string.Empty;
     }
 }

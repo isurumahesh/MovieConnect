@@ -51,7 +51,7 @@ namespace MovieConnect.UnitTests.Application
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(movieName, result.MovieDetail.Title);
+            Assert.Equal(movieName, result.MovieDetail!.Title);
             _cacheServiceMock.Verify(c => c.Get<MovieResponseDTO>(cacheKey), Times.Once);
 
             _movieDetailServiceSelectorMock.Verify(m => m.GetService(), Times.Never);
@@ -73,10 +73,10 @@ namespace MovieConnect.UnitTests.Application
 
             var movieDetail = new MovieDetail { Title = movieName };
             var movieVideos = new List<MovieVideo>
-        {
-            new MovieVideo { VideoUrl = new Uri("http://video1") },
-            new MovieVideo { VideoUrl = new Uri("http://video2") }
-        };
+            {
+                new MovieVideo { VideoUrl = new Uri("http://video1") },
+                new MovieVideo { VideoUrl = new Uri("http://video2") }
+            };
 
             movieDetailServiceMock.Setup(s => s.GetMovieDetailsAsync(movieName))
                                   .ReturnsAsync(movieDetail);
@@ -100,7 +100,7 @@ namespace MovieConnect.UnitTests.Application
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(movieName, result.MovieDetail.Title);
+            Assert.Equal(movieName, result.MovieDetail!.Title);
             Assert.Equal(movieVideos.Count, result.MovieVideos.Count);
 
             _cacheServiceMock.Verify(c => c.Get<MovieResponseDTO>(cacheKey), Times.Once);

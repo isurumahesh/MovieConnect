@@ -17,7 +17,7 @@ namespace MovieConnect.Infrastructure.Services
         {
             if (string.IsNullOrWhiteSpace(movieName))
                 throw new ArgumentException("Movie name must be provided.", nameof(movieName));
-         
+
             var provider = options.Value.MovieDetailProviders.FirstOrDefault(a => a.Name == ProviderName);
 
             if (provider is null || string.IsNullOrEmpty(provider.ApiKey))
@@ -33,7 +33,7 @@ namespace MovieConnect.Infrastructure.Services
             var requestUri = $"?t={Uri.EscapeDataString(movieName)}&apikey={provider.ApiKey}";
             var searchResponse = await httpClient.GetFromJsonAsync<OmdbMovieResponse>(requestUri);
 
-            if (searchResponse == null || searchResponse.Response=="False")
+            if (searchResponse == null || searchResponse.Response == "False")
             {
                 throw new MovieNotFoundException($"Movie '{movieName}' not found.");
             }

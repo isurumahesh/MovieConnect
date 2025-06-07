@@ -4,7 +4,7 @@ using MovieConnect.Application.DTOs;
 using MovieConnect.Application.Queries;
 
 namespace MovieConnect.API.Controllers
-{  
+{
     [Route("api/[controller]")]
     [ApiController]
     public class MoviesController(IMediator mediator) : ControllerBase
@@ -15,6 +15,7 @@ namespace MovieConnect.API.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(MovieResponseDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Get([FromQuery] string movieName)
         {
             if (string.IsNullOrEmpty(movieName))

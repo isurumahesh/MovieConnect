@@ -8,10 +8,12 @@
     {
         private readonly RequestDelegate _next;
         private const string ApiKeyHeaderName = "X-Api-Key";
+        private readonly string _apiKey;
 
         public ApiKeyMiddleware(RequestDelegate next)
         {
             _next = next;
+            _apiKey = Environment.GetEnvironmentVariable("MOVIE_CONNECT_API_KEY") ?? throw new Exception("API Key is not set in environment variables");
         }
 
         public async Task InvokeAsync(HttpContext context, IConfiguration configuration)
@@ -30,8 +32,7 @@
                 return;
             }
 
-            var apiKey = configuration["ApiKey"];
-            if (string.IsNullOrEmpty(apiKey) || !apiKey.Equals(extractedApiKey))
+            if (string.IsNullOrEmpty(_apiKey) || !_apiKey.Equals(extractedApiKey))
             {
                 context.Response.StatusCode = 403;
                 await context.Response.WriteAsync("Unauthorized client.");
@@ -41,5 +42,4 @@
             await _next(context);
         }
     }
-
 }

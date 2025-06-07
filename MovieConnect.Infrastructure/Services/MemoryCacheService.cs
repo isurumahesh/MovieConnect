@@ -12,7 +12,7 @@ namespace MovieConnect.Infrastructure.Services
             _memoryCache = memoryCache;
         }
 
-        public T Get<T>(string key)
+        public T? Get<T>(string key)
         {
             _memoryCache.TryGetValue(key, out T value);
             return value;
