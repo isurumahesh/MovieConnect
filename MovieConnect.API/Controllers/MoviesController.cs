@@ -4,11 +4,14 @@ using MovieConnect.Application.DTOs;
 using MovieConnect.Application.Queries;
 
 namespace MovieConnect.API.Controllers
-{
+{  
     [Route("api/[controller]")]
     [ApiController]
     public class MoviesController(IMediator mediator) : ControllerBase
     {
+        /// <summary>
+        /// Get movies by name
+        /// </summary>
         [HttpGet]
         [ProducesResponseType(typeof(MovieResponseDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -18,11 +18,17 @@ namespace MovieConnect.Infrastructure.Services
                 throw new ArgumentException("Movie name must be provided.", nameof(movieName));
 
             var provider = options.Value.MovieVideoProviders.FirstOrDefault(a => a.Name == ProviderName);
-
+           
             if (provider is null || string.IsNullOrEmpty(provider.ApiKey))
             {
                 throw new InvalidOperationException("YouTube provider configuration is missing.");
             }
+
+            var envApiKey = Environment.GetEnvironmentVariable(provider.ApiKey);
+            if (string.IsNullOrEmpty(envApiKey))
+                throw new Exception($"Missing API key environment variable for {provider.ApiKey}");
+            provider.ApiKey = envApiKey;
+
 
             var requestUri = $"search?q={Uri.EscapeDataString(movieName)}&part=id,snippet&type=video&key={provider.ApiKey}";
             var searchResponse = await httpClient.GetFromJsonAsync<YouTubeSearchResponse>(requestUri);

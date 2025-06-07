@@ -25,6 +25,11 @@ namespace MovieConnect.Infrastructure.Services
                 throw new InvalidOperationException("Omdb provider configuration is missing.");
             }
 
+            var envApiKey = Environment.GetEnvironmentVariable(provider.ApiKey);
+            if (string.IsNullOrEmpty(envApiKey))
+                throw new Exception($"Missing API key environment variable for {provider.ApiKey}");
+            provider.ApiKey = envApiKey;
+
             var requestUri = $"?t={Uri.EscapeDataString(movieName)}&apikey={provider.ApiKey}";
             var searchResponse = await httpClient.GetFromJsonAsync<OmdbMovieResponse>(requestUri);
 

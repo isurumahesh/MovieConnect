@@ -2,10 +2,11 @@ name: Build and Deploy MovieConnect API
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main","auth"]
 
 env:
   AZURE_WEBAPP_NAME: "movieconnectapi"
+  RESOURCE_GROUP: "bookchoice"
 
 jobs:
   # Job 1: Build and Push Docker Image
@@ -53,9 +54,22 @@ jobs:
     needs: build 
 
     steps:
+
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
         images: ${{ secrets.ACR_LOGIN_SERVER }}/movieconnectapi:${{ github.run_id }}
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.API_PUBLISH_SECRET }}
+
+    - name: Set Azure Web App configuration settings
+      uses: azure/cli@v1
+      with:
+        azcliversion: 2.50.0
+        inlineScript: |
+          az webapp config appsettings set --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.RESOURCE_GROUP }} --settings OMDB_API_KEY=${{ secrets.OMDB_API_KEY }} YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}
