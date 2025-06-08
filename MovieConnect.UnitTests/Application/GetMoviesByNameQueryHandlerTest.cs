@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.Extensions.Logging;
+using Moq;
 using MovieConnect.Application.DTOs;
 using MovieConnect.Application.Interfaces;
 using MovieConnect.Application.Queries;
@@ -13,6 +14,8 @@ namespace MovieConnect.UnitTests.Application
         private readonly Mock<IMovieDetailServiceSelector> _movieDetailServiceSelectorMock;
         private readonly Mock<IMovieVideoServiceSelector> _movieVideoServiceSelectorMock;
         private readonly Mock<ICacheService> _cacheServiceMock;
+        private readonly Mock<ILogger<GetMoviesByNameQueryHandler>> _mockLogger;
+        private const int CacheSize = 1;
 
         private readonly GetMoviesByNameQueryHandler _handler;
 
@@ -20,12 +23,14 @@ namespace MovieConnect.UnitTests.Application
         {
             _movieDetailServiceSelectorMock = new Mock<IMovieDetailServiceSelector>();
             _movieVideoServiceSelectorMock = new Mock<IMovieVideoServiceSelector>();
+            _mockLogger = new Mock<ILogger<GetMoviesByNameQueryHandler>>();
             _cacheServiceMock = new Mock<ICacheService>();
 
             _handler = new GetMoviesByNameQueryHandler(
                 _movieDetailServiceSelectorMock.Object,
                 _movieVideoServiceSelectorMock.Object,
-                _cacheServiceMock.Object);
+                _cacheServiceMock.Object,
+                 _mockLogger.Object);
         }
 
         [Fact]
@@ -59,7 +64,7 @@ namespace MovieConnect.UnitTests.Application
         }
 
         [Fact]
-        public async Task Handle_ShouldFetchFromServicesAndCache_WhenCacheMiss()
+        public async Task Handle_ShouldFetchFromServices_WhenCacheMiss()
         {
             // Arrange
             var movieName = "Interstellar";
@@ -90,7 +95,7 @@ namespace MovieConnect.UnitTests.Application
             _movieVideoServiceSelectorMock.Setup(s => s.GetService())
                                          .Returns(movieVideoServiceMock.Object);
 
-            _cacheServiceMock.Setup(c => c.Set(cacheKey, It.IsAny<MovieResponseDTO>(), It.IsAny<TimeSpan>()))
+            _cacheServiceMock.Setup(c => c.Set(cacheKey, It.IsAny<MovieResponseDTO>(), It.IsAny<TimeSpan>(), CacheSize))
                              .Verifiable();
 
             var query = new GetMoviesByName(movieName);
@@ -106,7 +111,7 @@ namespace MovieConnect.UnitTests.Application
             _cacheServiceMock.Verify(c => c.Get<MovieResponseDTO>(cacheKey), Times.Once);
             _movieDetailServiceSelectorMock.Verify(s => s.GetService(), Times.Once);
             _movieVideoServiceSelectorMock.Verify(s => s.GetService(), Times.Once);
-            _cacheServiceMock.Verify(c => c.Set(cacheKey, It.IsAny<MovieResponseDTO>(), It.IsAny<TimeSpan>()), Times.Once);
+            _cacheServiceMock.Verify(c => c.Set(cacheKey, It.IsAny<MovieResponseDTO>(), It.IsAny<TimeSpan>(), CacheSize), Times.Once);
         }
     }
 }

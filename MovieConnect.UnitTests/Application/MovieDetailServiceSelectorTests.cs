@@ -33,7 +33,7 @@ namespace MovieConnect.UnitTests.Application
         }
 
         [Fact]
-        public void GetService_ThrowsArgumentException_WhenSelectedProviderIsNullOrEmpty()
+        public void GetService_ThrowsInvalidOperationException_WhenSelectedProviderIsNullOrEmpty()
         {
             // Arrange
             var services = new List<IMovieDetailService>();
@@ -49,7 +49,7 @@ namespace MovieConnect.UnitTests.Application
         }
 
         [Fact]
-        public void GetService_ThrowsArgumentException_WhenProviderNotFound()
+        public void GetService_ThrowsInvalidOperationException_WhenProviderNotFound()
         {
             // Arrange
             var serviceMock = new Mock<IMovieDetailService>();

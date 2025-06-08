@@ -13,6 +13,8 @@ namespace MovieConnect.Infrastructure
 {
     public static class DependencyInjection
     {
+        private const int MemorySize = 1024;
+
         public static IServiceCollection AddInfrastructureDI(this IServiceCollection services, IConfiguration configuration)
         {
             Log.Logger = new LoggerConfiguration()
@@ -28,7 +30,10 @@ namespace MovieConnect.Infrastructure
                 loggingBuilder.AddSerilog();
             });
 
-            services.AddMemoryCache();
+            services.AddMemoryCache(options =>
+            {
+                options.SizeLimit = MemorySize;
+            });
             services.AddMovieProviderHttpClients();
             services.Configure<MovieProviderOptions>(configuration.GetSection("MovieProvidersOptions"));
             services.AddScoped<IMovieDetailService>(sp => sp.GetRequiredService<OmdbMovieDetailService>());

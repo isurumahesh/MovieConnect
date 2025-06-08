@@ -11,7 +11,8 @@ The **MovieConnect API** allows users to search for movies, retrieve detailed in
 - **Memory Cache**: Cache frequently accessed movie data for improved performance.  
 - **Clean Architecture**: Organized codebase following Clean Architecture principles.  
 - **CQRS**: Command Query Responsibility Segregation implemented for separation of concerns.  
-- **Global Error Handler**: Centralized middleware to catch and handle exceptions globally, returning consistent and meaningful error responses.  
+- **Global Error Handler**: Centralized middleware to catch and handle exceptions globally, returning consistent and meaningful error responses.
+- **Serilog Logging**: Flexible, structured logging with customizable sinks for tracking application behavior and issues. 
 - **Unit and Integration Tests**: Comprehensive tests ensuring application stability and correctness.  
 - **Dockerized Deployment**: Ready to deploy with Docker containers.  
 - **CI/CD Pipeline**: GitHub Actions workflow for automated builds, tests, and Azure deployments.
@@ -22,7 +23,8 @@ The **MovieConnect API** allows users to search for movies, retrieve detailed in
 - **Framework**: .NET 8  
 - **Architecture**: Clean Architecture, CQRS  
 - **HTTP Client**: Typed HttpClient with Polly for resiliency  
-- **Caching**: MemoryCache  
+- **Caching**: MemoryCache
+- **Logging**: Serilog  
 - **Testing**: xUnit  
 - **Containerization**: Docker  
 - **CI/CD**: GitHub Actions  

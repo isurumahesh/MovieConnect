@@ -1,11 +1,13 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using MovieConnect.Application.DTOs;
 using MovieConnect.Application.Interfaces;
 using MovieConnect.Core.Constants;
 
 namespace MovieConnect.Application.Queries
 {
-    public class GetMoviesByNameQueryHandler(IMovieDetailServiceSelector movieDetailServiceSelector, IMovieVideoServiceSelector movieVideoServiceSelector, ICacheService cacheService) : IRequestHandler<GetMoviesByName, MovieResponseDTO>
+    public class GetMoviesByNameQueryHandler(IMovieDetailServiceSelector movieDetailServiceSelector, IMovieVideoServiceSelector movieVideoServiceSelector,
+        ICacheService cacheService, ILogger<GetMoviesByNameQueryHandler> logger) : IRequestHandler<GetMoviesByName, MovieResponseDTO>
     {
         public async Task<MovieResponseDTO> Handle(GetMoviesByName request, CancellationToken cancellationToken)
         {
@@ -14,6 +16,7 @@ namespace MovieConnect.Application.Queries
             var movieResponse = cacheService.Get<MovieResponseDTO>(cacheKey);
             if (movieResponse is not null)
             {
+                logger.LogInformation($"{request.MovieName} is retrieved from cache");
                 return movieResponse;
             }
 

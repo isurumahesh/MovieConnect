@@ -18,9 +18,15 @@ namespace MovieConnect.Infrastructure.Services
             return value;
         }
 
-        public void Set<T>(string key, T value, TimeSpan duration)
+        public void Set<T>(string key, T value, TimeSpan duration, int size = 1)
         {
-            _memoryCache.Set(key, value, duration);
+            var cacheEntryOptions = new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = duration,
+                Size = size
+            };
+
+            _memoryCache.Set(key, value, cacheEntryOptions);
         }
 
         public void Remove(string key)
