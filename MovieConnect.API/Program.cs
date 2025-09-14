@@ -45,7 +45,7 @@ builder.Services.AddAppDI(builder.Configuration);
 
 var app = builder.Build();
 app.UseMiddleware<CustomErrorMiddleWare>();
-app.UseMiddleware<ApiKeyMiddleware>();
+//app.UseMiddleware<ApiKeyMiddleware>();
 
 // Swagger is enabled for demo purpose on production
 app.UseSwagger();
